@@ -60,4 +60,5 @@
 -(void)createContainerView;
 -(void)createSliderView;
 -(void)calculateAppropriateSelectorXposition:(UIView *)view;
+-(void)setRating:(NSInteger)rating;
 @end

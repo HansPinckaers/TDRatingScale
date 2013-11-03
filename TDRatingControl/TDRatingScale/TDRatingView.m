@@ -109,11 +109,11 @@
 {
     float itemX = self.spaceBetweenEachNo;
     float itemY = 0;
-    int differ = self.minimumRating;
+    NSInteger differ = self.minimumRating;
     //creating items
     itemsAry = [NSMutableArray new];
     itemsXPositionAry = [NSMutableArray new];
-    for (int i =self.minimumRating; i<self.maximumRating+1; i = i+self.difference) {
+    for (NSInteger i =self.minimumRating; i<self.maximumRating+1; i = i+self.difference) {
         
         UILabel *lblMyLabel = [[UILabel alloc] initWithFrame:CGRectMake(itemX, itemY, self.widthOfEachNo, self.heightOfEachNo)];
         lblMyLabel.numberOfLines = 0;
@@ -178,6 +178,43 @@
     [delegate selectedRating:myLabel.text];
     
 }
+
+-(void)setRating:(NSInteger)rating
+{
+    NSString *tRating = [NSString stringWithFormat:@"%i", rating];
+    float tappedViewX = 0.0f;
+
+    for(UILabel *label in itemsAry)
+        if([label.text isEqualToString:tRating])
+            tappedViewX = label.frame.origin.x;
+        
+    //Moving one place to another place animation
+    [UIView beginAnimations:@"MoveView" context:nil];
+    [UIView setAnimationDuration:0.25f];
+    CGRect sliderFrame = sliderView.frame;
+    sliderFrame.origin.x = tappedViewX;
+    sliderView.frame = sliderFrame;
+    [UIView commitAnimations];
+    
+    for(UILabel *mylbl in itemsAry) // Use fast enumeration to iterate through the array
+    {
+        if (mylbl.textColor == self.selectedStateTextColor) {
+            
+            mylbl.textColor = self.disableStateTextColor;
+            
+        }
+    }
+    
+    
+    float selectedViewX =sliderView.frame.origin.x;
+    //finding index position of selected view
+    NSUInteger index = [itemsXPositionAry indexOfObject:[NSString stringWithFormat:@"%f",selectedViewX]];
+    UILabel *myLabel = [itemsAry objectAtIndex:index];
+    [self performSelector:@selector(changeTextColor:) withObject:myLabel afterDelay:0.0];
+    [delegate selectedRating:myLabel.text];
+
+}
+
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer {
     
     CGPoint translation = [recognizer translationInView:self];
