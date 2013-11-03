@@ -29,11 +29,11 @@
         self.heightOfEachNo = 40;
         self.sliderHeight = 17;
         self.difference = 1;
-        self.scaleBgColor = [UIColor colorWithRed:27.0f/255 green:135.0f/255 blue:224.0f/255 alpha:1.0];
+        self.scaleBgColor = [UIColor whiteColor];
         self.arrowColor = [UIColor colorWithRed:27.0f/255 green:135.0f/255 blue:224.0f/255 alpha:0.5f];
-        self.disableStateTextColor = [UIColor colorWithRed:17.0f/255 green:10.0f/255 blue:36.0f/255 alpha:1.0];
-        self.selectedStateTextColor = [UIColor whiteColor];
-        self.sliderBorderColor = [UIColor whiteColor];
+        self.disableStateTextColor = [UIColor colorWithRed:0.494 green:0.808 blue:0.980 alpha:1.000];
+        self.selectedStateTextColor = [UIColor colorWithRed:0.243 green:0.271 blue:0.298 alpha:1.000];
+        self.sliderBorderColor = [UIColor clearColor];
 
     }
     return self;
@@ -73,7 +73,7 @@
 {
     float y =  (self.heightOfEachNo  + self.sliderHeight) + spaceBetweenSliderandRatingView;
     
-    float height = self.sliderHeight - (2*spaceBetweenSliderandRatingView);
+    float height = self.sliderHeight - (2*spaceBetweenSliderandRatingView)-10;
     sliderView = [[UIView alloc]initWithFrame:CGRectMake(self.spaceBetweenEachNo, 0, self.widthOfEachNo, self.frame.size.height)];
     sliderView.layer.borderColor = [self.sliderBorderColor CGColor];
     
@@ -81,19 +81,19 @@
     [self insertSubview:sliderView aboveSubview:containerView];
     
     
-    UIView *upArrow = [[UIView alloc]initWithFrame:CGRectMake(0, y, self.widthOfEachNo, height)];
+    UIView *upArrow = [[UIView alloc]initWithFrame:CGRectMake(8, y-10, 10, height)];
     upArrow.backgroundColor = [UIColor clearColor];
     [sliderView addSubview:upArrow];
     
-    TDArrow *triangleUp = [[TDArrow alloc]initWithFrame:CGRectMake(0, 0, upArrow.frame.size.width, upArrow.frame.size.height) arrowColor:self.arrowColor strokeColor:self.sliderBorderColor isUpArrow:YES];
+    TDArrow *triangleUp = [[TDArrow alloc]initWithFrame:CGRectMake(8, 0, 10, upArrow.frame.size.height) arrowColor:self.arrowColor strokeColor:self.sliderBorderColor isUpArrow:YES];
     [upArrow addSubview:triangleUp];
     
     
-    UIView *downArrow = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.widthOfEachNo, height)];
+    UIView *downArrow = [[UIView alloc]initWithFrame:CGRectMake(18, 10, 10, height)];
     downArrow.backgroundColor = [UIColor clearColor];
     [sliderView addSubview:downArrow];
     
-    TDArrow *triangleDown = [[TDArrow alloc]initWithFrame:CGRectMake(0, 0, upArrow.frame.size.width, upArrow.frame.size.height) arrowColor:self.arrowColor strokeColor:self.sliderBorderColor isUpArrow:NO];
+    TDArrow *triangleDown = [[TDArrow alloc]initWithFrame:CGRectMake(16, 20, 10, upArrow.frame.size.height) arrowColor:self.arrowColor strokeColor:self.sliderBorderColor isUpArrow:NO];
     [sliderView addSubview:triangleDown];
     
     UIPanGestureRecognizer* panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
@@ -121,6 +121,7 @@
         lblMyLabel.backgroundColor = [UIColor clearColor];
         lblMyLabel.textAlignment = NSTextAlignmentCenter;
         lblMyLabel.text = [NSString stringWithFormat:@"%ld",(long)differ];
+        lblMyLabel.font = [UIFont systemFontOfSize:18.0f];
         differ = differ + self.difference;
         
         lblMyLabel.textColor = self.disableStateTextColor;        
@@ -146,6 +147,7 @@
 -(void)changeTextColor:(UILabel *)myLbl
 {
     myLbl.textColor = self.selectedStateTextColor;
+    myLbl.font = [UIFont boldSystemFontOfSize:18.0f];
 }
 - (void)handleTap:(UIPanGestureRecognizer *)recognizer {
     
@@ -162,11 +164,8 @@
     
     for(UILabel *mylbl in itemsAry) // Use fast enumeration to iterate through the array
     {
-        if (mylbl.textColor == self.selectedStateTextColor) {
-            
             mylbl.textColor = self.disableStateTextColor;
-            
-        }
+            mylbl.font = [UIFont systemFontOfSize:18.0f];
     }
     
     
@@ -198,11 +197,8 @@
     
     for(UILabel *mylbl in itemsAry) // Use fast enumeration to iterate through the array
     {
-        if (mylbl.textColor == self.selectedStateTextColor) {
-            
-            mylbl.textColor = self.disableStateTextColor;
-            
-        }
+        mylbl.textColor = self.disableStateTextColor;
+        mylbl.font = [UIFont systemFontOfSize:18.0f];
     }
     
     
@@ -231,7 +227,7 @@
             if (mylbl.textColor == self.selectedStateTextColor) {
                 
                 mylbl.textColor = self.disableStateTextColor;
-                
+                mylbl.font = [UIFont systemFontOfSize:18.0f];  
             }
         }
         
