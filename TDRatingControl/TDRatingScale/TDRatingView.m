@@ -12,6 +12,9 @@
 
 #define spaceBetweenSliderandRatingView 0
 @implementation TDRatingView
+{
+    NSInteger currentIndex;
+}
 @synthesize  maximumRating ,minimumRating,spaceBetweenEachNo, difference;
 @synthesize widthOfEachNo, heightOfEachNo, sliderHeight,delegate;
 @synthesize scaleBgColor,arrowColor,disableStateTextColor,selectedStateTextColor,sliderBorderColor;
@@ -174,8 +177,12 @@
     NSUInteger index = [itemsXPositionAry indexOfObject:[NSString stringWithFormat:@"%f",selectedViewX]];
     UILabel *myLabel = [itemsAry objectAtIndex:index];
     [self performSelector:@selector(changeTextColor:) withObject:myLabel afterDelay:0.0];
-    [delegate ratingView:self selectedRating:myLabel.text];
-    
+    //finding index position of selected view
+    if(currentIndex != index)
+    {
+        [delegate ratingView:self selectedRating:myLabel.text];
+        currentIndex = index;
+    }
 }
 
 -(void)setRating:(NSInteger)rating
@@ -207,34 +214,54 @@
     NSUInteger index = [itemsXPositionAry indexOfObject:[NSString stringWithFormat:@"%f",selectedViewX]];
     UILabel *myLabel = [itemsAry objectAtIndex:index];
     [self performSelector:@selector(changeTextColor:) withObject:myLabel afterDelay:0.0];
-    [delegate ratingView:self selectedRating:myLabel.text];
-
+//    [delegate ratingView:self selectedRating:myLabel.text];
+    //finding index position of selected view
+    if(currentIndex != index)
+    {
+        [delegate ratingView:self selectedRating:myLabel.text];
+        currentIndex = index;
+    }
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer {
     
-    CGPoint translation = [recognizer translationInView:self];
-    CGFloat newX = MIN(recognizer.view.frame.origin.x + translation.x, self.frame.size.width - recognizer.view.frame.size.width);
+    CGPoint translation = [recognizer locationInView:self];
+    CGFloat newX = MAX(MIN(translation.x-20, self.frame.size.width - recognizer.view.frame.size.width), 0);
     CGRect newFrame = CGRectMake( newX,recognizer.view.frame.origin.y, recognizer.view.frame.size.width, recognizer.view.frame.size.height);
     recognizer.view.frame = newFrame;
     [recognizer setTranslation:CGPointZero inView:self];
     
-    if ([itemsXPositionAry containsObject:[NSString stringWithFormat:@"%f",recognizer.view.frame.origin.x]]) {
+    NSInteger distance = 1000;
+    NSString *currentItem = nil;
+    for(NSString *item in itemsXPositionAry)
+    {
+        if(abs(recognizer.view.frame.origin.x - [item floatValue]) < distance)
+        {
+            distance = abs(recognizer.view.frame.origin.x - [item floatValue]);
+            currentItem = item;
+        }
+    }
+    
+    if (currentItem) {
         
         
         for(UILabel *mylbl in itemsAry)
         {
-            if (mylbl.textColor == self.selectedStateTextColor) {
-                
-                mylbl.textColor = self.disableStateTextColor;
-                mylbl.font = [UIFont systemFontOfSize:18.0f];  
-            }
+            mylbl.textColor = self.disableStateTextColor;
+            mylbl.font = [UIFont systemFontOfSize:18.0f];  
         }
         
-        NSUInteger index = [itemsXPositionAry indexOfObject:[NSString stringWithFormat:@"%f",recognizer.view.frame.origin.x]];
+        NSUInteger index = [itemsXPositionAry indexOfObject:currentItem];
         UILabel * uil = [itemsAry objectAtIndex:index];
         uil.textColor = self.selectedStateTextColor;
+        uil.font = [UIFont boldSystemFontOfSize:18.0f];
         
+        //finding index position of selected view
+        if(currentIndex != index)
+        {
+            [delegate ratingView:self selectedRating:uil.text];
+            currentIndex = index;
+        }
     }
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         
@@ -315,7 +342,11 @@
     NSUInteger index = [itemsXPositionAry indexOfObject:[NSString stringWithFormat:@"%f",selectedViewX]];
     UILabel *myLabel = [itemsAry objectAtIndex:index];
     myLabel.textColor = self.selectedStateTextColor;
-    [delegate ratingView:self selectedRating:myLabel.text];
+    if(currentIndex != index)
+    {
+        [delegate ratingView:self selectedRating:myLabel.text];
+        currentIndex = index;
+    }
     
     
     
