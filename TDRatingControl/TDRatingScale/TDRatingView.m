@@ -120,7 +120,7 @@
         lblMyLabel.tag=i;
         lblMyLabel.backgroundColor = [UIColor clearColor];
         lblMyLabel.textAlignment = NSTextAlignmentCenter;
-        lblMyLabel.text = [NSString stringWithFormat:@"%d",differ];
+        lblMyLabel.text = [NSString stringWithFormat:@"%ld",(long)differ];
         differ = differ + self.difference;
         
         lblMyLabel.textColor = self.disableStateTextColor;        
@@ -181,7 +181,7 @@
 
 -(void)setRating:(NSInteger)rating
 {
-    NSString *tRating = [NSString stringWithFormat:@"%i", rating];
+    NSString *tRating = [NSString stringWithFormat:@"%li", (long)rating];
     float tappedViewX = 0.0f;
 
     for(UILabel *label in itemsAry)
