@@ -8,10 +8,12 @@
 
 
 #import <UIKit/UIKit.h>
+@class TDRatingView;
+
 @protocol TDRatingViewDelegate <NSObject>
 
 @required
-- (void) selectedRating:(NSString *)scale;
+- (void)ratingView:(TDRatingView *)ratingView selectedRating:(NSString *)scale;
 @end
 
 @interface TDRatingView : UIView<UIGestureRecognizerDelegate>

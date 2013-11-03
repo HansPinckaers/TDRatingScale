@@ -175,7 +175,7 @@
     NSUInteger index = [itemsXPositionAry indexOfObject:[NSString stringWithFormat:@"%f",selectedViewX]];
     UILabel *myLabel = [itemsAry objectAtIndex:index];
     [self performSelector:@selector(changeTextColor:) withObject:myLabel afterDelay:0.0];
-    [delegate selectedRating:myLabel.text];
+    [delegate ratingView:self selectedRating:myLabel.text];
     
 }
 
@@ -211,7 +211,7 @@
     NSUInteger index = [itemsXPositionAry indexOfObject:[NSString stringWithFormat:@"%f",selectedViewX]];
     UILabel *myLabel = [itemsAry objectAtIndex:index];
     [self performSelector:@selector(changeTextColor:) withObject:myLabel afterDelay:0.0];
-    [delegate selectedRating:myLabel.text];
+    [delegate ratingView:self selectedRating:myLabel.text];
 
 }
 
@@ -319,7 +319,7 @@
     NSUInteger index = [itemsXPositionAry indexOfObject:[NSString stringWithFormat:@"%f",selectedViewX]];
     UILabel *myLabel = [itemsAry objectAtIndex:index];
     myLabel.textColor = self.selectedStateTextColor;
-    [delegate selectedRating:myLabel.text];
+    [delegate ratingView:self selectedRating:myLabel.text];
     
     
     
