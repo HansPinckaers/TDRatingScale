@@ -30,7 +30,7 @@
         self.sliderHeight = 17;
         self.difference = 1;
         self.scaleBgColor = [UIColor colorWithRed:27.0f/255 green:135.0f/255 blue:224.0f/255 alpha:1.0];
-        self.arrowColor = [UIColor redColor];
+        self.arrowColor = [UIColor colorWithRed:27.0f/255 green:135.0f/255 blue:224.0f/255 alpha:0.5f];
         self.disableStateTextColor = [UIColor colorWithRed:17.0f/255 green:10.0f/255 blue:36.0f/255 alpha:1.0];
         self.selectedStateTextColor = [UIColor whiteColor];
         self.sliderBorderColor = [UIColor whiteColor];
@@ -64,11 +64,6 @@
     //Container view
     containerView = [[UIView alloc]initWithFrame:CGRectMake(0, self.sliderHeight, self.frame.size.width, self.heightOfEachNo)];
     containerView.backgroundColor = self.scaleBgColor;
-    containerView.layer.shadowColor = [[UIColor lightGrayColor] CGColor];
-    containerView.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-    containerView.layer.shadowOpacity = 1.0f;
-    containerView.layer.shadowRadius = 1.0f;
-    containerView.layer.cornerRadius = self.heightOfEachNo/2;
     [self addSubview:containerView];
     
     [self createSliderView];
@@ -80,11 +75,6 @@
     
     float height = self.sliderHeight - (2*spaceBetweenSliderandRatingView);
     sliderView = [[UIView alloc]initWithFrame:CGRectMake(self.spaceBetweenEachNo, 0, self.widthOfEachNo, self.frame.size.height)];
-    sliderView.layer.shadowColor = [[UIColor darkGrayColor] CGColor];
-    sliderView.layer.shadowOffset = CGSizeMake(2.0f, 2.0f);
-    sliderView.layer.shadowOpacity = 1.0f;
-    sliderView.layer.shadowRadius = 2.0f;
-    sliderView.layer.cornerRadius = 2;
     sliderView.layer.borderColor = [self.sliderBorderColor CGColor];
     
     sliderView.layer.borderWidth = 2.0f;
@@ -129,16 +119,11 @@
         lblMyLabel.numberOfLines = 0;
         lblMyLabel.tag=i;
         lblMyLabel.backgroundColor = [UIColor clearColor];
-        lblMyLabel.textAlignment = UITextAlignmentCenter;
+        lblMyLabel.textAlignment = NSTextAlignmentCenter;
         lblMyLabel.text = [NSString stringWithFormat:@"%d",differ];
         differ = differ + self.difference;
         
-        lblMyLabel.textColor = self.disableStateTextColor;
-        
-        lblMyLabel.layer.shadowColor = [lblMyLabel.textColor CGColor];
-        lblMyLabel.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-        lblMyLabel.layer.shadowRadius = 2.0;
-        lblMyLabel.layer.shadowOpacity = 0.3;
+        lblMyLabel.textColor = self.disableStateTextColor;        
         lblMyLabel.layer.masksToBounds = NO;
         lblMyLabel.userInteractionEnabled = YES;
         [containerView addSubview:lblMyLabel];
@@ -169,8 +154,7 @@
     
     //Moving one place to another place animation
     [UIView beginAnimations:@"MoveView" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-    [UIView setAnimationDuration:0.5f];
+    [UIView setAnimationDuration:0.25f];
     CGRect sliderFrame = sliderView.frame;
     sliderFrame.origin.x = tappedViewX;
     sliderView.frame = sliderFrame;
@@ -190,7 +174,7 @@
     //finding index position of selected view
     NSUInteger index = [itemsXPositionAry indexOfObject:[NSString stringWithFormat:@"%f",selectedViewX]];
     UILabel *myLabel = [itemsAry objectAtIndex:index];
-    [self performSelector:@selector(changeTextColor:) withObject:myLabel afterDelay:0.5];
+    [self performSelector:@selector(changeTextColor:) withObject:myLabel afterDelay:0.0];
     [delegate selectedRating:myLabel.text];
     
 }

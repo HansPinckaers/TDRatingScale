@@ -44,7 +44,7 @@
     rating2.difference = 10;
     rating2.delegate = self;
     rating2.scaleBgColor = [UIColor colorWithRed:188.0f/255 green:98.0f/255 blue:150.0f/255 alpha:1.0];
-    rating2.arrowColor = [UIColor colorWithRed:73.0f/255 green:78.0f/255 blue:100.0f/255 alpha:1.0];
+    rating2.arrowColor = [UIColor colorWithRed:188.0f/255 green:98.0f/255 blue:150.0f/255 alpha:0.5f];
     rating2.disableStateTextColor = [UIColor colorWithRed:40.0f/255 green:38.0f/255 blue:46.0f/255 alpha:1.0];
     [rating2 drawRatingControlWithX:13 Y:175];
     [self.view addSubview:rating2];
